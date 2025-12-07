@@ -22,7 +22,7 @@ class GLU(nn.Module):
     - `W_up · x` = `signal_pathway` (upward projection, ups the dimension of x,
     carries the actual information)
     - `h` = hidden = `σ(gating_pathway) ⊙ signal_pathway`
-    - `output` = projection back to original dimension with `W_out`
+    - `output` = projection back to original dimension with `W_down`
     """
 
     def __init__(
