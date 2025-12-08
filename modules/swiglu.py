@@ -6,8 +6,10 @@ from torch import Tensor
 
 class SwiGLU(nn.Module):
     r"""
-    SwiGLU (Swish-Gated Linear Unit). A variant of GLU that uses Swish activation
-    instead of sigmoid, providing smoother gradients and often better performance.
+    A Feed-Forward Network with a SwiGLU (Swish-Gated Linear Unit) Activation.
+
+    SwiGLU is avariant of GLU that uses Swish activation instead of sigmoid,
+    providing smoother gradients and often better performance.
 
     Calculated as:
     ```
