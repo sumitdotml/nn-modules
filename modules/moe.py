@@ -2,6 +2,7 @@ import torch
 import torch.nn as nn
 from torch import Tensor
 from typing import Optional
+from .swiglu import SwiGLU as Expert
 
 
 class MoERouter(nn.Module):
@@ -108,6 +109,8 @@ class MoERouter(nn.Module):
 class MoELayer(nn.Module):
     def __init__(
         self,
+        hidden_dim: int,
+        ffn_dim: int,
         n_experts: int,
         topk: int,
         device: Optional[torch.device] = None,
@@ -116,6 +119,21 @@ class MoELayer(nn.Module):
         super().__init__()
         factory_kwargs = {"device": device, "dtype": dtype}
 
+        self.hidden_dim = hidden_dim
+        self.n_experts = n_experts
+        self.topk = topk
+
+        self.router = MoERouter(
+            hidden_dim=hidden_dim, n_ffn_experts=n_experts, topk=topk, **factory_kwargs
+        )
+        self.experts = nn.ModuleList(
+            [
+                Expert(hidden_dim=hidden_dim, ffn_dim=ffn_dim, **factory_kwargs)
+                for _ in range(n_experts)
+            ]
+        )
+
     def forward(self, x: Tensor) -> Tensor:
-        pass
-        "contd..."
+        values, indices = self.router(x)
+        # contd...
+        
