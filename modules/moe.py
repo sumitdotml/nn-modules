@@ -206,9 +206,9 @@ class MoELayer(nn.Module):
         # ====== EASY BUT SLOW AND LOUSY APPROACH =======
         # the following works, but it processes tokens sequentially, so very inefficient for production
         # but leaving it here for reference since this is the logic
-        # for i, token in enumerate(flattened_x):
+        # for i, token in enumerate(x_flat):
         #     for j in range(self.topk):
-        #         results[i] += (self.experts[indices[i][j]](x_flattened[i])) * weights[i][j]
+        #         results[i] += (self.experts[indices[i][j]](x_flat[i])) * weights[i][j]
         # return results
 
         # ======= FAST AND COMPUTATIONALLY EFFICIENT VECTORIZED APPROACH =======
